@@ -3,8 +3,8 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
-import { Device } from '../device';
-import { DeviceService } from '../device.service';
+import { Device } from '../../device';
+import { DeviceService } from '../../device.service';
 
 import * as Fuse from 'fuse.js'
 import FuseOptions = Fuse.FuseOptions;
@@ -12,7 +12,7 @@ import FuseOptions = Fuse.FuseOptions;
 @Component({
   selector: 'app-autoselect-device',
   templateUrl: './autoselect-device.component.html',
-  styleUrls: ['./autoselect-device.component.scss']
+  styleUrls: []
 })
 export class AutoselectDeviceComponent implements OnInit {
 

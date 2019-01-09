@@ -3,13 +3,13 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
-import { Location } from '../location';
-import { LocationService } from '../location.service';
+import { Location } from '../../location';
+import { LocationService } from '../../location.service';
 
 @Component({
   selector: 'app-autoselect-location',
   templateUrl: './autoselect-location.component.html',
-  styleUrls: ['./autoselect-location.component.scss']
+  styleUrls: []
 })
 export class AutoselectLocationComponent implements OnInit {
 

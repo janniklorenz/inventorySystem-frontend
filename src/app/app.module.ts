@@ -29,7 +29,6 @@ import { NgxMdModule } from 'ngx-md';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MessagesComponent } from './messages/messages.component';
 
 import { TagsComponent } from './tags/tags.component';
 import { TagDetailComponent } from './tag-detail/tag-detail.component';
@@ -45,18 +44,18 @@ import { InventoryDetailComponent } from './inventory-detail/inventory-detail.co
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerComponent } from './color-picker/color-picker.component';
-import { AutoselectUserComponent } from './autoselect-user/autoselect-user.component';
-import { AutoselectTagComponent } from './autoselect-tag/autoselect-tag.component';
 import { TagSpanComponent } from './tag-span/tag-span.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobDetailComponent } from './job-detail/job-detail.component';
-import { AutoselectLocationComponent } from './autoselect-location/autoselect-location.component';
-import { AutoselectDeviceComponent } from './autoselect-device/autoselect-device.component';
+
+import { AutoselectUserComponent } from './autoselect/user/autoselect-user.component';
+import { AutoselectTagComponent } from './autoselect/tag/autoselect-tag.component';
+import { AutoselectLocationComponent } from './autoselect/location/autoselect-location.component';
+import { AutoselectDeviceComponent } from './autoselect/device/autoselect-device.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MessagesComponent,
     TagsComponent,
     TagDetailComponent,
     DevicesComponent,

@@ -16,7 +16,6 @@ import { DeviceService } from '../device.service';
 export class DevicesComponent implements OnInit {
 
   devices: MatTableDataSource<Device>;
-  // devices: Device[];
 
   displayedColumns: string[] = ['shortDescription', 'name', "vendor", "count", "tags", "actions"];
 

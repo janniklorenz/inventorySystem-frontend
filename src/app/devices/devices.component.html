@@ -11,48 +11,52 @@
 
 
 
+<div class="responsive_table">
+  <table mat-table [dataSource]="devices" matSort class="table mat-elevation-z8">
 
-<table mat-table [dataSource]="devices" matSort class="table mat-elevation-z8">
+    <ng-container matColumnDef="shortDescription">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Kurze Beschreibung</th>
+      <td mat-cell *matCellDef="let device">
+        <span class="mobile-label">Kurze Beschreibung</span>
+        {{device.title}}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="shortDescription">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Kurze Beschreibung</th>
-    <td mat-cell *matCellDef="let device">{{device.title}}</td>
-  </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let device">{{device.name}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-    <td mat-cell *matCellDef="let device">{{device.name}}</td>
-  </ng-container>
+    <ng-container matColumnDef="vendor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Hersteller</th>
+      <td mat-cell *matCellDef="let device">{{device.vendor}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="vendor">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Hersteller</th>
-    <td mat-cell *matCellDef="let device">{{device.vendor}}</td>
-  </ng-container>
+    <ng-container matColumnDef="count">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Anzahl</th>
+      <td mat-cell *matCellDef="let device">{{device.all_instances_count}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="count">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Anzahl</th>
-    <td mat-cell *matCellDef="let device">{{device.all_instances_count}}</td>
-  </ng-container>
+    <ng-container matColumnDef="tags">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tag</th>
+      <td mat-cell *matCellDef="let device">
+        <span *ngFor="let tag of device.tags; let isLast=last"><app-tag-span [tag]="tag"></app-tag-span>{{isLast ? '' : ', '}}</span>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="tags">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Tag</th>
-    <td mat-cell *matCellDef="let device">
-      <span *ngFor="let tag of device.tags; let isLast=last"><app-tag-span [tag]="tag"></app-tag-span>{{isLast ? '' : ', '}}</span>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Aktionen</th>
-    <td mat-cell *matCellDef="let device">
-      <button mat-button color="warn" (click)="delete(device)">Löschen</button>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Aktionen</th>
+      <td mat-cell *matCellDef="let device">
+        <button mat-button color="warn" (click)="delete(device)">Löschen</button>
+      </td>
+    </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
-      class="example-first-header-row">
-  </tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
+        class="example-first-header-row">
+    </tr>
 
-  <tr mat-row (click)="navigate(device)" *matRowDef="let device; columns: displayedColumns;"></tr>
-</table>
+    <tr mat-row (click)="navigate(device)" *matRowDef="let device; columns: displayedColumns;"></tr>
+  </table>
+</div>
 <mat-paginator [pageSizeOptions]="[100, 50, 10, 20]" showFirstLastButtons></mat-paginator>

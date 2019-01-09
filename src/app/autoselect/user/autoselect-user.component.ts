@@ -3,13 +3,13 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
-import { User } from '../user';
-import { UserService } from '../user.service';
+import { User } from '../../user';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-autoselect-user',
   templateUrl: './autoselect-user.component.html',
-  styleUrls: ['./autoselect-user.component.scss']
+  styleUrls: []
 })
 export class AutoselectUserComponent implements OnInit {
 

@@ -3,13 +3,13 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
-import { Tag } from '../tag';
-import { TagService } from '../tag.service';
+import { Tag } from '../../tag';
+import { TagService } from '../../tag.service';
 
 @Component({
   selector: 'app-autoselect-tag',
   templateUrl: './autoselect-tag.component.html',
-  styleUrls: ['./autoselect-tag.component.scss']
+  styleUrls: []
 })
 export class AutoselectTagComponent implements OnInit {
 
