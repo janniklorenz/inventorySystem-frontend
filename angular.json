@@ -28,7 +28,6 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/app/simple-grid-css/simple-grid.scss",
             ],
             "scripts": []
           },
