@@ -1,29 +1,49 @@
 # TODO
 
-
-- jobs
+- Jobs
   - props
     - inventory items needed
   - print item list to pack stuff
   - sort termine by start date
-- location
-  - add gps pos
-  - add map
-  - list jobs at this location
-- event
-  - add time edit
-  - add ics feed
+
+- Location
+  - add GPS position
+  - add open street map
+  - list jobs and items at this location
+
+- Event
+  - allow start and end time edit
+  - add ics feed for all events
   - add single event page
+
 - Devices
   - suggestions for vendor
-  - allow file uploads for devices (e.g. to store dmx files)
-- inventory detail
-  - show jobs this item is used in
-- suche verbessern/ tags/ fuzy
-- löschen alerts
-- key-value text felder?
-- Item Group konzept
-- dashboard
-- instance add params
-  - status
-  - location
+  - allow file uploads for devices
+    - to store dmx files
+    - manuals
+
+- Inventory (Detail)
+  - show Jobs this item is used in
+
+- Instance
+  - add status
+  - add location
+
+- General
+  - improve search tags/ fuzy
+    - done for devices/ inventorys with fusejs
+  - alerts befor delete
+  - dashboard
+    - show last activity?
+    - comming events?
+  - Item Group concept
+    - add method to group instances into groups
+      - to select them faster
+      - e.g. all items in a 19" rack
+
+
+
+
+
+- Backlog
+  - add key-value text fields?

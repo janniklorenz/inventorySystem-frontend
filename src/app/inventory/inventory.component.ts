@@ -17,7 +17,7 @@ export class InventoryComponent implements OnInit {
 
   inventory: MatTableDataSource<Inventory>;
 
-  displayedColumns: string[] = ['shortDescription', 'name', 'vendor', "count", "owners", "actions"];
+  displayedColumns: string[] = ['shortDescription', 'name', 'vendor', "count", "owners", "tags", "actions"];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

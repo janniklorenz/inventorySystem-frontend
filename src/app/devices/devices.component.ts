@@ -55,11 +55,11 @@ export class DevicesComponent implements OnInit {
             var options = {
               shouldSort: false,
               tokenize: true,
-              matchAllTokens: false,
+              matchAllTokens: true,
               findAllMatches: false,
-              threshold: 0.6,
+              threshold: 0.3,
               location: 0,
-              distance: 100,
+              distance: 4,
               maxPatternLength: 32,
               minMatchCharLength: 1,
               keys: ['name', 'title', 'vendor', 'tags.name', 'description']
