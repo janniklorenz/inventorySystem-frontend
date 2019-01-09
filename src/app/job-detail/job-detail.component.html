@@ -1,0 +1,111 @@
+<div *ngIf="job" class="row">
+  <h2>Job: {{job.name}}</h2>
+
+  <div fxLayoutGap="10px" fxLayout="row" fxLayout.xs="column">
+
+    <div fxFlex="50%" fxLayout="column">
+      <h3>Eigenschaften</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="job.name" placeholder="Name"/>
+      </mat-form-field>
+      <app-autoselect-location [(location)]="job.location"></app-autoselect-location>
+
+
+      <mat-tab-group>
+        <mat-tab label="Beschreibung">
+          <ngx-md *ngIf="job.description != ''" [data]="job.description"></ngx-md>
+        </mat-tab>
+        <mat-tab label="Bearbeiten">
+          <div class="column">
+            <mat-form-field appearance="fill">
+              <mat-label>Beschreibung</mat-label>
+              <textarea matInput [(ngModel)]="job.description" rows="20" placeholder="Beschreibung"></textarea>
+            </mat-form-field>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+
+
+    <div fxFlex="50%">
+      <h3>Termine</h3>
+
+      <form (submit)="addEvent()" fxLayout="row">
+        <mat-form-field fxFlex="90%" appearance="fill">
+          <mat-label>Neuer Termin</mat-label>
+          <input matInput name="new_event" [(ngModel)]="selectedNewEventName" placeholder="Neuer Termin"/>
+        </mat-form-field>
+        <button class="add_button" fxFlex="10%" mat-button type="submit">+</button>
+      </form>
+
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let event of job.events">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{event.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{event.startDate | date: "dd.MM.yyyy H:mm"}} - {{event.endDate | date: "dd.MM.yyyy H:mm"}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+
+          <div class="column">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput [(ngModel)]="event.name" placeholder="Name"/>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Von</mat-label>
+              <input matInput [matDatepicker]="datePickerFrom" placeholder="Von" [(ngModel)]="event.startDate">
+              <mat-datepicker-toggle matSuffix [for]="datePickerFrom"></mat-datepicker-toggle>
+              <mat-datepicker #datePickerFrom></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Bis</mat-label>
+              <input matInput [matDatepicker]="datePickerTo" placeholder="Bis" [(ngModel)]="event.endDate">
+              <mat-datepicker-toggle matSuffix [for]="datePickerTo"></mat-datepicker-toggle>
+              <mat-datepicker #datePickerTo></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Beschreibung</mat-label>
+              <textarea matInput [(ngModel)]="event.description" rows="5" placeholder="Beschreibung"></textarea>
+            </mat-form-field>
+
+            <!-- <mat-form-field [color]="op">
+              <input matInput type="number" placeholder="H" min="0" max="23">
+            </mat-form-field>
+            <mat-form-field [color]="opt">
+              <input matInput type="number" placeholder="m" min="0" max="59">
+            </mat-form-field> -->
+
+          </div>
+          <button mat-button color="warn" (click)="removeEvent(event)">Löschen</button>
+
+        </mat-expansion-panel>
+
+      </mat-accordion>
+    </div>
+  </div>
+
+  <footer>
+    <mat-toolbar style="display:fixed;bottom:0px;" fxLayout="row" fxLayoutAlign="space-between center" >
+      <div class="buttonGroup">
+        <button mat-raised-button (click)="goBack()">Zurück</button>
+        <button mat-raised-button *ngIf="mode == DetailMode.Edit" (click)="delete()" color="warn">Löschen</button>
+      </div>
+      <div class="buttonGroup">
+        <button mat-raised-button color="primary" (click)="saveAndExit()">Speichern</button>
+        <button mat-raised-button [matMenuTriggerFor]="saveAnd">mehr</button>
+        <mat-menu #saveAnd="matMenu">
+          <button mat-menu-item (click)="saveAndNew()">Speichern und Neu</button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+  </footer>
+</div>

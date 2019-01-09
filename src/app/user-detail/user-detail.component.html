@@ -1,0 +1,36 @@
+<div *ngIf="user" class="row">
+  <h2>Person: {{user.firstName}} {{user.lastName}}</h2>
+
+  <div fxLayoutGap="10px" fxLayout="row" fxLayout.xs="column">
+
+    <div fxFlex="100%" fxLayout="column">
+      <h3>Eigenschaften</h3>
+      <div fxLayoutGap="10px" fxLayout="row" fxLayout.xs="column">
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Vorname</mat-label>
+          <input matInput [(ngModel)]="user.firstName" placeholder="Vorname"/>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="user.lastName" placeholder="Name"/>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <footer>
+      <mat-toolbar style="display:fixed;bottom:0px;" fxLayout="row" fxLayoutAlign="space-between center" >
+        <div class="buttonGroup">
+          <button mat-raised-button (click)="goBack()">Zurück</button>
+          <button mat-raised-button *ngIf="mode == DetailMode.Edit" (click)="delete()" color="warn">Löschen</button>
+        </div>
+        <div class="buttonGroup">
+          <button mat-raised-button color="primary" (click)="saveAndExit()">Speichern</button>
+          <button mat-raised-button [matMenuTriggerFor]="saveAnd">mehr</button>
+          <mat-menu #saveAnd="matMenu">
+            <button mat-menu-item (click)="saveAndNew()">Speichern und Neu</button>
+          </mat-menu>
+        </div>
+      </mat-toolbar>
+    </footer>
+  </div>
+</div>

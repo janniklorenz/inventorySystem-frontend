@@ -1,0 +1,111 @@
+<div *ngIf="item" class="row">
+  <h2>Inventar
+    <span *ngIf="item.device">
+      {{item.device.name}} ({{item.device.vendor}})
+    </span>
+  </h2>
+
+  <div fxLayoutGap="10px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+
+
+    <div fxLayoutGap="10px" fxFlex="70%" fxLayout="row" fxLayout.xs="column">
+
+      <div fxFlex="30" fxLayout="column">
+        <h3>Eigenschaften</h3>
+        <app-autoselect-device [(device)]="item.device"></app-autoselect-device>
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Preis</mat-label>
+          <input matInput [(ngModel)]="item.price" placeholder="Preis"/>
+        </mat-form-field> -->
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Beschreibung</mat-label>
+          <textarea matInput [(ngModel)]="item.description" rows="10" placeholder="Beschreibung"></textarea>
+        </mat-form-field>
+      </div>
+
+
+      <div fxFlex="auto" fxLayout="column">
+        <h3>Instanzen ({{item.instances.length}})</h3>
+        <form (submit)="addInstances(numberOfNewInstances)" fxLayout="row">
+          <mat-form-field fxFlex="90%" appearance="fill">
+            <mat-label>Anzahl</mat-label>
+            <input matInput name="Anzahl" [(ngModel)]="numberOfNewInstances" placeholder="Anzahl"/>
+          </mat-form-field>
+          <button class="add_button" fxFlex="10%" mat-button type="submit">+</button>
+        </form>
+
+
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let instance of item.instances; let i = index" [attr.data-index]="i">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{i+1}}. Instanz ID: {{instance.id}}
+              </mat-panel-title>
+              <mat-panel-description>
+                <div style="margin-left: auto;">
+                  <button mat-button color="warn" (click)="removeInstance(instance)">Löschen</button>
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="space-between stretch" fxLayout.sm="column">
+              <div fxFlex="70%" fxLayout="column">
+                <mat-form-field fxFlex appearance="fill">
+                  <mat-label>ID</mat-label>
+                  <input matInput name="ID" [(ngModel)]="instance.id" placeholder="ID"/>
+                </mat-form-field>
+                <mat-form-field fxFlex appearance="fill">
+                  <mat-label>Beschreibung</mat-label>
+                  <textarea matInput [(ngModel)]="instance.description" rows="5" placeholder="Beschreibung"></textarea>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex>
+                <h4>Instanz ID QR-Code</h4>
+                <qrcode [qrdata]="'instance.id'" [size]="128" [level]="'M'"></qrcode>
+              </div>
+              <!-- <mat-form-field>
+                <input matInput placeholder="First name">
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="Age">
+              </mat-form-field> -->
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <button style="margin-top: 10px;" mat-button color="warn" (click)="removeAllInstances()">Alle Löschen</button>
+      </div>
+    </div>
+
+    <div fxFlex="30%" fxLayout="column">
+      <h3>Besitzer ({{item.owners.length}})</h3>
+      <form (submit)="addOwner()" fxLayout="row">
+        <app-autoselect-user fxFlex="90%" [(user)]="selectedNewOwner"></app-autoselect-user>
+        <button class="add_button" fxFlex="10%" mat-button type="submit">+</button>
+      </form>
+      <mat-list>
+        <mat-list-item *ngFor="let owner of item.owners">
+          {{owner.firstName}} {{owner.lastName}} <button mat-button color="warn" (click)="removeOwner(owner)">Löschen</button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+  </div>
+
+  <footer>
+    <mat-toolbar style="display:fixed;bottom:0px;" fxLayout="row" fxLayoutAlign="space-between center" >
+      <div class="buttonGroup">
+        <button mat-raised-button (click)="goBack()">Zurück</button>
+        <button mat-raised-button *ngIf="mode == DetailMode.Edit" (click)="delete()" color="warn">Löschen</button>
+      </div>
+      <div class="buttonGroup">
+        <button mat-raised-button color="primary" (click)="saveAndExit()">Speichern</button>
+        <button mat-raised-button [matMenuTriggerFor]="saveAnd">mehr</button>
+        <mat-menu #saveAnd="matMenu">
+          <button mat-menu-item (click)="saveAndNew()">Speichern und Neu</button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+  </footer>
+</div>

@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <span><a routerLink="/dashboard">Inventar System</a></span>
+
+  <span class="example-fill-remaining-space"></span>
+
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+    <span><a routerLink="/device">Geräte</a></span>
+    <span><a routerLink="/inventory">Inventar</a></span>
+    <span><a routerLink="/tag">Tags</a></span>
+    <span><a routerLink="/user">Personen</a></span>
+    <span><a routerLink="/location">Orte</a></span>
+    <span><a routerLink="/job">Jobs</a></span>
+  </div>
+  <span mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>Menü</span>
+</mat-toolbar>
+
+<mat-menu x-position="before" #menu="matMenu">
+  <button mat-menu-item routerLink="/device">Geräte</button>
+  <button mat-menu-item routerLink="/inventory">Inventar</button>
+  <button mat-menu-item routerLink="/tag">Tags</button>
+  <button mat-menu-item routerLink="/user">Personen</button>
+  <button mat-menu-item routerLink="/location">Orte</button>
+  <button mat-menu-item routerLink="/job">Jobs</button>
+</mat-menu>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

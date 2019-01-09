@@ -1,0 +1,9 @@
+<mat-form-field style="width:100%;" appearance="fill">
+  <mat-label>Gerät</mat-label>
+  <input placeholder="Gerät" aria-label="Number" matInput [formControl]="autoselectControl" [matAutocomplete]="autoDevice">
+  <mat-autocomplete #autoDevice="matAutocomplete" [displayWith]="displayWithLabel" autoActiveFirstOption="true" (optionSelected)="onChange($event)">
+    <mat-option *ngFor="let device of filteredDevices | async" [value]="device">
+      {{device.title}} ({{device.vendor}} {{device.name}})
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

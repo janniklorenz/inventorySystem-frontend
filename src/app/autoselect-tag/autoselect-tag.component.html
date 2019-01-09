@@ -1,0 +1,9 @@
+<mat-form-field style="width:100%;" appearance="fill">
+  <mat-label>Tag hinzufügen</mat-label>
+  <input placeholder="Tag hinzufügen" aria-label="Number" matInput [formControl]="autoselectControl" [matAutocomplete]="autoTag">
+  <mat-autocomplete #autoTag="matAutocomplete" [displayWith]="displayWithLabel" autoActiveFirstOption="true" (optionSelected)="onChange($event)">
+    <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+      <app-tag-span [tag]="tag"></app-tag-span>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

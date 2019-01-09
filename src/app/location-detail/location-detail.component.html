@@ -1,0 +1,76 @@
+<div *ngIf="location" class="row">
+  <h2>Ort: {{location.name}}</h2>
+
+  <div fxLayoutGap="10px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+
+    <div fxFlex="50%" fxLayout="column">
+      <h3>Eigenschaften</h3>
+      <div fxLayoutGap="10px" fxLayout="column">
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="location.name" placeholder="Name"/>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Beschreibung</mat-label>
+          <textarea matInput [(ngModel)]="location.description" rows="10" placeholder="Beschreibung"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex="50%">
+      <h3>Addresse</h3>
+      <div class="column">
+        <div fxLayoutGap="10px" fxLayout="row">
+          <mat-form-field fxFlex="70%" appearance="fill">
+            <mat-label>Straße</mat-label>
+            <input matInput [(ngModel)]="location.street" placeholder="Straße"/>
+          </mat-form-field>
+          <mat-form-field fxFlex="30%" appearance="fill">
+            <mat-label>Hausnr.</mat-label>
+            <input matInput [(ngModel)]="location.streetNumber" placeholder="Hausnummer"/>
+          </mat-form-field>
+        </div>
+        <div fxLayoutGap="10px" fxLayout="row">
+          <mat-form-field fxFlex="70%" appearance="fill">
+            <mat-label>Stadt</mat-label>
+            <input matInput [(ngModel)]="location.city" placeholder="Stadt"/>
+          </mat-form-field>
+          <mat-form-field fxFlex="30%" appearance="fill">
+            <mat-label>Postleitzahl</mat-label>
+            <input matInput [(ngModel)]="location.postCode" placeholder="Postleitzahl"/>
+          </mat-form-field>
+        </div>
+        <div fxLayoutGap="10px" fxLayout="row">
+          <mat-form-field fxFlex appearance="fill">
+            <mat-label>Latitude</mat-label>
+            <input matInput [(ngModel)]="location.fill" placeholder="Latitude"/>
+          </mat-form-field>
+          <mat-form-field fxFlex appearance="fill">
+            <mat-label>Longitude</mat-label>
+            <input matInput [(ngModel)]="location.fill" placeholder="Longitude"/>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div>
+      <h3>Karte</h3>
+    </div> -->
+  </div>
+
+  <footer>
+    <mat-toolbar style="display:fixed;bottom:0px;" fxLayout="row" fxLayoutAlign="space-between center" >
+      <div class="buttonGroup">
+        <button mat-raised-button (click)="goBack()">Zurück</button>
+        <button mat-raised-button *ngIf="mode == DetailMode.Edit" (click)="delete()" color="warn">Löschen</button>
+      </div>
+      <div class="buttonGroup">
+        <button mat-raised-button color="primary" (click)="saveAndExit()">Speichern</button>
+        <button mat-raised-button [matMenuTriggerFor]="saveAnd">mehr</button>
+        <mat-menu #saveAnd="matMenu">
+          <button mat-menu-item (click)="saveAndNew()">Speichern und Neu</button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+  </footer>
+</div>

@@ -1,0 +1,87 @@
+<div *ngIf="device" class="row">
+  <h2>Gerät {{device.name | uppercase}}</h2>
+
+  <div fxLayoutGap="10px" fxLayout="row" fxLayout.xs="column">
+
+
+    <div fxFlex="60%" fxLayout="column">
+      <h3>Eigenschaften</h3>
+
+      <div fxLayoutGap="10px" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="device.name" placeholder="Name"/>
+        </mat-form-field>
+        <mat-form-field fxFlex appearance="fill">
+          <mat-label>Hersteller</mat-label>
+          <input matInput [(ngModel)]="device.vendor" placeholder="Hersteller"/>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Kurze Beschreibung</mat-label>
+        <input matInput [(ngModel)]="device.title" placeholder="Kurze Beschreibung"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Beschreibung</mat-label>
+        <textarea matInput [(ngModel)]="device.description" rows="10" placeholder="Beschreibung"></textarea>
+      </mat-form-field>
+
+    </div>
+
+
+    <mat-tab-group fxFlex="40%">
+
+      <mat-tab label="Tags">
+        <form (submit)="addTag()" fxLayout="row">
+          <app-autoselect-tag fxFlex="90%" [(tag)]="selectedNewTag"></app-autoselect-tag>
+          <button class="add_button" fxFlex="10%" mat-button type="submit">+</button>
+        </form>
+        <mat-list>
+          <mat-list-item *ngFor="let tag of device.tags">
+            <app-tag-span [tag]="tag"></app-tag-span> <button mat-button color="warn" (click)="removeTag(tag)">Löschen</button>
+          </mat-list-item>
+        </mat-list>
+      </mat-tab>
+
+      <mat-tab label="Inventare">
+        <mat-card *ngFor="let inventory of device.inventorys" (click)="navigateInventory(inventory)">
+          <mat-card-title>
+            <span *ngFor="let owner of inventory.owners; let isLast=last">
+              {{owner.firstName}} {{owner.lastName}}{{isLast ? '' : ', '}}
+            </span>
+          </mat-card-title>
+          <mat-card-subtitle>
+            Anzahl: {{inventory.instances.length}}
+          </mat-card-subtitle>
+          <mat-list>
+            <mat-list-item *ngFor="let instance of inventory.instances">
+              {{instance.id}}
+            </mat-list-item>
+          </mat-list>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+
+
+  </div>
+
+  <footer>
+    <mat-toolbar style="display:fixed;bottom:0px;" fxLayout="row" fxLayoutAlign="space-between center" >
+      <div class="buttonGroup">
+        <button mat-raised-button (click)="goBack()">Zurück</button>
+        <button mat-raised-button *ngIf="mode == DetailMode.Edit" (click)="delete()" color="warn">Löschen</button>
+      </div>
+      <div class="buttonGroup">
+        <button mat-raised-button color="primary" (click)="saveAndExit()">Speichern</button>
+        <button mat-raised-button [matMenuTriggerFor]="saveAnd">mehr</button>
+        <mat-menu #saveAnd="matMenu">
+          <button mat-menu-item (click)="saveAndNew()">Speichern und Neu</button>
+          <button mat-menu-item (click)="saveAndInventory()">Speichern und Inventar anlegen</button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+  </footer>
+
+</div>
