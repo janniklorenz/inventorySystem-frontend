@@ -35,7 +35,7 @@
     </ng-container>
 
     <ng-container matColumnDef="tags">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tag</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tags</th>
       <td mat-cell *matCellDef="let device">
         <span *ngFor="let tag of device.tags; let isLast=last"><app-tag-span [tag]="tag"></app-tag-span>{{isLast ? '' : ', '}}</span>
       </td>

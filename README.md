@@ -1,8 +1,8 @@
 # InventorySystem Frontend
 
 ## Config
-Currenty `src/app/config.py`
-
+Currenty `src/app/config.py`.
+Example `htaccess` file at `/htaccess`.
 
 
 ## Run
