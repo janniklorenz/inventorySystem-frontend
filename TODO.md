@@ -25,10 +25,6 @@
 - Inventory (Detail)
   - show Jobs this item is used in
 
-- Instance
-  - add status
-  - add location
-
 - General
   - improve search tags/ fuzy
     - done for devices/ inventorys with fusejs

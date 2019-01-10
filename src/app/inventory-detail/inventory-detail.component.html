@@ -36,12 +36,22 @@
 
 
         <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Alle Bearbeiten</mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-autoselect-status (statusChange)="instancesSetStatus($event)"></app-autoselect-status>
+            <app-autoselect-location (locationChange)="instancesSetLocation($event)"></app-autoselect-location>
+            <button style="margin-top: 10px;" mat-button color="warn" (click)="removeAllInstances()">Alle Löschen</button>
+          </mat-expansion-panel>
+
           <mat-expansion-panel *ngFor="let instance of item.instances; let i = index" [attr.data-index]="i">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{i+1}}. Instanz ID: {{instance.id}}
+                {{i+1}}. Instanz ID: {{instance.id}} - {{instance.status}}
               </mat-panel-title>
               <mat-panel-description>
+                <span *ngIf="instance.location">{{instance.location.name}}</span>
                 <div style="margin-left: auto;">
                   <button mat-button color="warn" (click)="removeInstance(instance)">Löschen</button>
                 </div>
@@ -54,6 +64,8 @@
                   <mat-label>ID</mat-label>
                   <input matInput name="ID" [(ngModel)]="instance.id" placeholder="ID"/>
                 </mat-form-field>
+                <app-autoselect-status [(status)]="instance.status"></app-autoselect-status>
+                <app-autoselect-location [(location)]="instance.location"></app-autoselect-location>
                 <mat-form-field fxFlex appearance="fill">
                   <mat-label>Beschreibung</mat-label>
                   <textarea matInput [(ngModel)]="instance.description" rows="5" placeholder="Beschreibung"></textarea>
@@ -64,17 +76,9 @@
                 <h4>Instanz ID QR-Code</h4>
                 <qrcode [qrdata]="'instance.id'" [size]="128" [level]="'M'"></qrcode>
               </div>
-              <!-- <mat-form-field>
-                <input matInput placeholder="First name">
-              </mat-form-field>
-
-              <mat-form-field>
-                <input matInput placeholder="Age">
-              </mat-form-field> -->
             </div>
           </mat-expansion-panel>
         </mat-accordion>
-        <button style="margin-top: 10px;" mat-button color="warn" (click)="removeAllInstances()">Alle Löschen</button>
       </div>
     </div>
 

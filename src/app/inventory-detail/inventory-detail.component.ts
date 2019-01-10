@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
@@ -14,6 +13,7 @@ import { Inventory } from '../inventory';
 import { User } from '../user';
 import { DetailMode } from '../detailMode';
 import { Instance } from '../instance';
+import { Location } from '../location';
 
 @Component({
   selector: 'app-inventory-detail',
@@ -64,8 +64,7 @@ export class InventoryDetailComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private deviceService: DeviceService,
-    private inventoryService: InventoryService,
-    private location: Location
+    private inventoryService: InventoryService
   ) {}
 
   ngOnInit() {
@@ -127,5 +126,15 @@ export class InventoryDetailComponent implements OnInit {
 
   delete(): void {
     this.inventoryService.deleteItem(this.item).subscribe(_ => this.goBack());
+  }
+
+
+
+
+  instancesSetStatus(status: string) {
+    this.item.instances.forEach(instance => instance.status = status);
+  }
+  instancesSetLocation(location: Location) {
+    this.item.instances.forEach(instance => instance.location = location);
   }
 }

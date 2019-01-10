@@ -22,6 +22,7 @@ import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatChipsModule} from "@angular/material/chips";
 
 import { MccColorPickerModule } from 'material-community-components';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -52,6 +53,7 @@ import { AutoselectUserComponent } from './autoselect/user/autoselect-user.compo
 import { AutoselectTagComponent } from './autoselect/tag/autoselect-tag.component';
 import { AutoselectLocationComponent } from './autoselect/location/autoselect-location.component';
 import { AutoselectDeviceComponent } from './autoselect/device/autoselect-device.component';
+import { AutoselectStatusComponent } from './autoselect/status/autoselect-status.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,8 @@ import { AutoselectDeviceComponent } from './autoselect/device/autoselect-device
     JobsComponent,
     JobDetailComponent,
     AutoselectLocationComponent,
-    AutoselectDeviceComponent
+    AutoselectDeviceComponent,
+    AutoselectStatusComponent
   ],
   imports: [
     NgbModule,
@@ -92,7 +95,7 @@ import { AutoselectDeviceComponent } from './autoselect/device/autoselect-device
     MatAutocompleteModule,
     MatDatepickerModule, MatNativeDateModule,
     MatExpansionModule, MatListModule, MatCardModule,
-    FlexLayoutModule, MatIconModule, MatTabsModule,
+    FlexLayoutModule, MatIconModule, MatTabsModule, MatChipsModule,
 
     MccColorPickerModule,
     QRCodeModule,

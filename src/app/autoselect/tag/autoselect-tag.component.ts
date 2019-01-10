@@ -17,7 +17,6 @@ export class AutoselectTagComponent implements OnInit {
   set tag(tag: Tag) {
     this.autoselectControl.setValue(tag);
   }
-
   @Output() tagChange = new EventEmitter<Tag>();
 
   constructor(private tagService: TagService) { }
