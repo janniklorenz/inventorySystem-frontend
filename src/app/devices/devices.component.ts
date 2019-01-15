@@ -1,12 +1,33 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
-
-import * as Fuse from 'fuse.js'
-import FuseOptions = Fuse.FuseOptions;
 
 import { Device } from '../device';
 import { DeviceService } from '../device.service';
+import { Tag } from '../tag';
+import { FuseSearchDataSource } from '../fuseSearchDataSource';
+
+
+
+class DevicesDataSource extends FuseSearchDataSource<Device> {
+  searchKeys = ['name', 'title', 'vendor', 'tags.name', 'description'];
+
+  _filteredTags: Tag[] = [];
+  set filteredTags(tags: Tag[]) {
+    this._filteredTags = tags;
+
+    // Trigger reload
+    this.filter = this.filter;
+  }
+
+  _filterData(data: Device[]): Device[] {
+    this.filteredData = this._filteredTags == null ? data : data.filter(device => Tag.filter(device.tags, this._filteredTags));
+    super._filterData(this.filteredData);
+    return this.filteredData;
+  }
+}
+
+
 
 @Component({
   selector: 'app-devices',
@@ -15,7 +36,7 @@ import { DeviceService } from '../device.service';
 })
 export class DevicesComponent implements OnInit {
 
-  devices: MatTableDataSource<Device>;
+  devices: DevicesDataSource;
 
   displayedColumns: string[] = ['shortDescription', 'name', "vendor", "count", "tags", "actions"];
 
@@ -39,34 +60,13 @@ export class DevicesComponent implements OnInit {
     this.router.navigate(['/device/new']);
   }
 
-  applyFilter(filterValue: string) {
-    this.devices.filter = filterValue.trim().toLowerCase();
-  }
-
   getDevices(): void {
     this.deviceService.getDevices()
       .subscribe(devices => {
-        this.devices = new MatTableDataSource(devices);
+        this.devices = new DevicesDataSource(devices);
         this.devices.paginator = this.paginator;
         this.devices.sort = this.sort;
-        this.devices.filterPredicate =
-          (device: Device, filter: string) => {
-            var options = {
-              shouldSort: false,
-              tokenize: true,
-              matchAllTokens: true,
-              findAllMatches: false,
-              threshold: 0.3,
-              location: 0,
-              distance: 4,
-              maxPatternLength: 32,
-              minMatchCharLength: 1,
-              keys: ['name', 'title', 'vendor', 'tags.name', 'description']
-            } as FuseOptions<Device>;
-            var fuse = new Fuse([device], options)
-            return fuse.search(filter).length != 0;
-          };
-        });
+      });
   }
 
   delete(device: Device): void {

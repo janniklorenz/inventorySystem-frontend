@@ -1,13 +1,17 @@
-<h2>Geräte</h2>
+<h2>
+  Geräte
+  <button style="float:right;" mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
+</h2>
 
 
 
 <!-- Filter -->
-<button mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
-<mat-form-field style="float:right;">
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche">
-</mat-form-field>
-
+<div class="filter" *ngIf="devices" fxLayoutAlign="space-between" fxLayoutGap="30px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+  <mat-form-field fxFlex="30%">
+    <input matInput [(ngModel)]="devices.filter" placeholder="Suche">
+  </mat-form-field>
+  <app-tags-select fxFlex="70%" [(selectedTags)]="devices.filteredTags"></app-tags-select>
+</div>
 
 
 

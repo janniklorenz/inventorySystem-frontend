@@ -1,0 +1,16 @@
+<mat-expansion-panel [expanded]="false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Tags
+    </mat-panel-title>
+    <mat-panel-description>
+      <span *ngFor="let tag of _selectedTags; let isLast=last">{{tag.name}}{{isLast ? '' : ', '}}</span>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div>
+    <mat-checkbox *ngFor="let tag of tags" [checked]= "_selectedTags.includes(tag)" (change)="onChange($event, tag)" >{{tag.name}}</mat-checkbox>
+  </div>
+  <button mat-button (click)="selectAll()">Alle auswählen</button>
+  <button mat-button (click)="deselectAll()">Alle abwählen</button>
+</mat-expansion-panel>

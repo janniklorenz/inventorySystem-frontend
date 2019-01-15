@@ -1,9 +1,20 @@
-<h2>Inventar</h2>
+<h2>
+  Inventar
+  <button style="float:right;" mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
+</h2>
 
-<button mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
-<mat-form-field style="float:right;">
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche">
-</mat-form-field>
+
+<!-- Filter -->
+<div class="filter" *ngIf="inventory" fxLayoutAlign="space-between" fxLayoutGap="30px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+  <mat-form-field fxFlex="30%">
+    <input matInput [(ngModel)]="inventory.filter" placeholder="Suche">
+  </mat-form-field>
+  <mat-accordion fxFlex="70%">
+    <app-tags-select [(selectedTags)]="inventory.filteredTags"></app-tags-select>
+    <app-users-select [(selectedUsers)]="inventory.filteredUsers"></app-users-select>
+  </mat-accordion>
+</div>
+
 
 <div class="responsive_table">
   <table mat-table [dataSource]="inventory" matSort class="mat-elevation-z8 table">

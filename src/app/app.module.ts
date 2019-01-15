@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgMode
 import { HttpClientModule }    from '@angular/common/http';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -54,6 +55,8 @@ import { AutoselectTagComponent } from './autoselect/tag/autoselect-tag.componen
 import { AutoselectLocationComponent } from './autoselect/location/autoselect-location.component';
 import { AutoselectDeviceComponent } from './autoselect/device/autoselect-device.component';
 import { AutoselectStatusComponent } from './autoselect/status/autoselect-status.component';
+import { TagsSelectComponent } from './tags-select/tags-select.component';
+import { UsersSelectComponent } from './users-select/users-select.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +80,9 @@ import { AutoselectStatusComponent } from './autoselect/status/autoselect-status
     JobDetailComponent,
     AutoselectLocationComponent,
     AutoselectDeviceComponent,
-    AutoselectStatusComponent
+    AutoselectStatusComponent,
+    TagsSelectComponent,
+    UsersSelectComponent
   ],
   imports: [
     NgbModule,
@@ -87,7 +92,8 @@ import { AutoselectStatusComponent } from './autoselect/status/autoselect-status
     FormsModule, ReactiveFormsModule,
 
     HttpClientModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule, /*NoopAnimationsModule*/
+    
     MatButtonModule, MatCheckboxModule,
     MatTableModule, MatPaginatorModule, MatSortModule,
     MatMenuModule, MatToolbarModule,

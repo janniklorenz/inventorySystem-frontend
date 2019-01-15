@@ -1,0 +1,16 @@
+<mat-expansion-panel [expanded]="false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Besitzer
+    </mat-panel-title>
+    <mat-panel-description>
+      <span *ngFor="let user of _selectedUsers; let isLast=last">{{user.firstName}} {{user.lastName}}{{isLast ? '' : ', '}}</span>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div>
+    <mat-checkbox *ngFor="let user of users" [checked]= "_selectedUsers.includes(user)" (change)="onChange($event, user)" >{{user.firstName}} {{user.lastName}}</mat-checkbox>
+  </div>
+  <button mat-button (click)="selectAll()">Alle auswählen</button>
+  <button mat-button (click)="deselectAll()">Alle abwählen</button>
+</mat-expansion-panel>
