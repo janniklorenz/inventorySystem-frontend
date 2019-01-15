@@ -28,6 +28,7 @@ export class TagsSelectComponent implements OnInit {
   getTags(): void {
     this.tagService.getTags()
       .subscribe(tags => {
+        tags.push(Tag.noTag);
         this.tags = tags;
         this._selectedTags = tags.slice(0);;
         this.selectedTagsChange.emit(this._selectedTags);

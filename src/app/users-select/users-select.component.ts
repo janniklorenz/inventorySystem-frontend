@@ -28,6 +28,7 @@ export class UsersSelectComponent implements OnInit {
   getUsers(): void {
     this.userService.getUsers()
       .subscribe(users => {
+        users.push(User.noOwners);
         this.users = users;
         this._selectedUsers = users.slice(0);;
         this.selectedUsersChange.emit(this._selectedUsers);
