@@ -9,7 +9,7 @@
   </mat-expansion-panel-header>
 
   <div>
-    <mat-checkbox *ngFor="let user of users" color="primary" [checked]= "_selectedUsers.includes(user)" (change)="onChange($event, user)" >{{user.firstName}} {{user.lastName}}</mat-checkbox>
+    <mat-checkbox *ngFor="let user of users" color="primary" [checked]= "isChecked(user)" (change)="onChange($event, user)" >{{user.firstName}} {{user.lastName}}</mat-checkbox>
   </div>
   <button mat-button (click)="selectAll()">Alle auswählen</button>
   <button mat-button (click)="deselectAll()">Alle abwählen</button>

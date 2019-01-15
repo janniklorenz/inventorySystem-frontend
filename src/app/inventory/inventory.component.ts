@@ -17,16 +17,29 @@ class InventoryDataSource extends FuseSearchDataSource<Inventory> {
     'owners.firstName', 'owners.lastName'
   ];
 
-  _filteredTags: Tag[] = [];
+  constructor(data: Inventory[]) {
+    super(data);
+    this.loadFromSession();
+  }
+
+  _filteredTags: Tag[];
   set filteredTags(tags: Tag[]) {
     this._filteredTags = tags;
     this.filter = this.filter; // Trigger reload
+    this.saveToSession();
+  }
+  get filteredTags() {
+    return this._filteredTags;
   }
 
-  _filteredUsers: User[] = [];
+  _filteredUsers: User[];
   set filteredUsers(users: User[]) {
     this._filteredUsers = users;
     this.filter = this.filter; // Trigger reload
+    this.saveToSession();
+  }
+  get filteredUsers() {
+    return this._filteredUsers;
   }
 
   _filterData(data: Inventory[]): Inventory[] {
@@ -35,6 +48,22 @@ class InventoryDataSource extends FuseSearchDataSource<Inventory> {
     this.filteredData = this._filteredUsers == null ? this.filteredData : this.filteredData.filter(item => User.filter(item.owners, this._filteredUsers));
     super._filterData(this.filteredData);
     return this.filteredData;
+  }
+
+  saveToSession() {
+    sessionStorage.filter_tags = JSON.stringify(this._filteredTags);
+    sessionStorage.filter_users = JSON.stringify(this._filteredUsers);
+  }
+  loadFromSession() {
+    try {
+      this._filteredTags = JSON.parse(sessionStorage.filter_tags);
+    }
+    catch(e) { }
+
+    try {
+      this._filteredUsers = JSON.parse(sessionStorage.filter_users);
+    }
+    catch(e) { }
   }
 }
 

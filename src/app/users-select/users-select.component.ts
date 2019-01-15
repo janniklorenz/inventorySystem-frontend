@@ -28,11 +28,17 @@ export class UsersSelectComponent implements OnInit {
   getUsers(): void {
     this.userService.getUsers()
       .subscribe(users => {
-        users.push(User.noOwners);
+        users.push(User.noOwners());
         this.users = users;
-        this._selectedUsers = users.slice(0);;
-        this.selectedUsersChange.emit(this._selectedUsers);
+        if (this._selectedUsers == null) {
+          this._selectedUsers = users.slice(0);
+          this.selectedUsersChange.emit(this._selectedUsers);
+        }
       });
+  }
+
+  isChecked(user: User) {
+    return this._selectedUsers.filter(u => u.id == user.id).length > 0;
   }
 
   onChange(event, user: User) {

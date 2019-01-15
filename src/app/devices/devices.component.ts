@@ -12,18 +12,35 @@ import { FuseSearchDataSource } from '../fuseSearchDataSource';
 class DevicesDataSource extends FuseSearchDataSource<Device> {
   searchKeys = ['name', 'title', 'vendor', 'tags.name', 'description'];
 
-  _filteredTags: Tag[] = [];
+  constructor(data: Device[]) {
+    super(data);
+    this.loadFromSession();
+  }
+
+  _filteredTags: Tag[];
   set filteredTags(tags: Tag[]) {
     this._filteredTags = tags;
-
-    // Trigger reload
-    this.filter = this.filter;
+    this.filter = this.filter; // Trigger reload
+    this.saveToSession();
+  }
+  get filteredTags() {
+    return this._filteredTags;
   }
 
   _filterData(data: Device[]): Device[] {
     this.filteredData = this._filteredTags == null ? data : data.filter(device => Tag.filter(device.tags, this._filteredTags));
     super._filterData(this.filteredData);
     return this.filteredData;
+  }
+
+  saveToSession() {
+    sessionStorage.filter_tags = JSON.stringify(this._filteredTags);
+  }
+  loadFromSession() {
+    try {
+      this._filteredTags = JSON.parse(sessionStorage.filter_tags);
+    }
+    catch(e) { }
   }
 }
 

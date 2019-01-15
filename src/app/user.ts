@@ -3,13 +3,12 @@ export class User {
   firstName: string = "";
   lastName: string = "";
 
-  constructor(id: number, firstName: string, lastName: string) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
-
-  public static noOwners: User = new User(-1, "Ohne Besitzer", "");
+  public static noOwners(): User {
+     var user = new User();
+     user.id = -1;
+     user.firstName = "Ohne Besitzer";
+     return user;
+   }
 
   // search given *users* array if it contains at least one item from *searchUsers*
   public static filter(users: User[], searchUsers: User[]): boolean {

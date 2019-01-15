@@ -28,11 +28,17 @@ export class TagsSelectComponent implements OnInit {
   getTags(): void {
     this.tagService.getTags()
       .subscribe(tags => {
-        tags.push(Tag.noTag);
+        tags.push(Tag.noTag());
         this.tags = tags;
-        this._selectedTags = tags.slice(0);;
-        this.selectedTagsChange.emit(this._selectedTags);
+        if (this._selectedTags == null) {
+          this._selectedTags = tags.slice(0);
+          this.selectedTagsChange.emit(this._selectedTags);
+        }
       });
+  }
+
+  isChecked(tag: Tag) {
+    return this._selectedTags.filter(t => t.id == tag.id).length > 0;
   }
 
   onChange(event, tag: Tag) {
