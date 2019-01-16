@@ -37,7 +37,7 @@
 
         <mat-accordion>
           <mat-expansion-panel>
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="right-aligned-header">
               <mat-panel-title>Alle bearbeiten</mat-panel-title>
             </mat-expansion-panel-header>
             <app-autoselect-status (statusChange)="instancesSetStatus($event)"></app-autoselect-status>
@@ -46,7 +46,7 @@
           </mat-expansion-panel>
 
           <mat-expansion-panel *ngFor="let instance of item.instances; let i = index" [attr.data-index]="i">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="right-aligned-header">
               <mat-panel-title>
                 {{i+1}}. Instanz ID: {{instance.id}} - {{instance.status}}
               </mat-panel-title>

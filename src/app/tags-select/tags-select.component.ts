@@ -10,7 +10,7 @@ import { TagService } from '../tag.service';
 })
 export class TagsSelectComponent implements OnInit {
 
-  tags: Tag[];
+  tags: Tag[] = [];
   _selectedTags: Tag[] = [];
 
   @Input()

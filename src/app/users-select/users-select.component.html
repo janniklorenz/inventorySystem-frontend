@@ -1,10 +1,13 @@
 <mat-expansion-panel [expanded]="false">
-  <mat-expansion-panel-header>
+  <mat-expansion-panel-header class="right-aligned-header">
     <mat-panel-title>
       Besitzer
     </mat-panel-title>
     <mat-panel-description>
-      <span *ngFor="let user of _selectedUsers; let isLast=last">{{user.firstName}} {{user.lastName}}{{isLast ? '' : ', '}}</span>
+      <span *ngIf="_selectedUsers.length != users.length">
+        <span *ngFor="let user of _selectedUsers; let isLast=last">{{user.firstName}} {{user.lastName}}{{isLast ? '' : ', '}}</span>
+      </span>
+      <span *ngIf="_selectedUsers.length == users.length">Alle</span>
     </mat-panel-description>
   </mat-expansion-panel-header>
 

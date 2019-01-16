@@ -1,10 +1,13 @@
 <mat-expansion-panel [expanded]="false">
-  <mat-expansion-panel-header>
+  <mat-expansion-panel-header class="right-aligned-header">
     <mat-panel-title>
       Tags
     </mat-panel-title>
     <mat-panel-description>
-      <span *ngFor="let tag of _selectedTags; let isLast=last">{{tag.name}}{{isLast ? '' : ', '}}</span>
+      <span *ngIf="_selectedTags.length != tags.length">
+        <span  *ngFor="let tag of _selectedTags; let isLast=last">{{tag.name}}{{isLast ? '' : ', '}}</span>
+      </span>
+      <span *ngIf="_selectedTags.length == tags.length">Alle</span>
     </mat-panel-description>
   </mat-expansion-panel-header>
 
