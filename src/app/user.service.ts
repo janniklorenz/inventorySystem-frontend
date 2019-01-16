@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { User } from './user';
 import { MessageService } from './message.service';
 import { Config } from './config';
+import { RequestCacheService } from './request-cache.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cache: RequestCacheService,
   ) { }
 
   getUsers(): Observable<User[]> {
@@ -40,6 +42,7 @@ export class UserService {
 
   /** PUT: update the hero on the server */
   updateUser (user: User): Observable<any> {
+    this.clearCache();
     return this.http.put(this.url, user, this.httpOptions).pipe(
       tap(_ => this.log(`updated user id=${user.id}`)),
       catchError(this.handleError<any>('updateUser'))
@@ -48,6 +51,7 @@ export class UserService {
 
   /** POST: add a new hero to the server */
   addUser (user: User): Observable<User> {
+    this.clearCache();
     return this.http.post<User>(this.url, user, this.httpOptions).pipe(
       tap((user: User) => this.log(`added user w/ id=${user.id}`)),
       catchError(this.handleError<User>('addUser'))
@@ -56,6 +60,7 @@ export class UserService {
 
   /** DELETE: delete the hero from the server */
   deleteUser (user: User | number): Observable<User> {
+    this.clearCache();
     const id = typeof user === 'number' ? user : user.id;
     const url = `${this.url}/${id}`;
 
@@ -65,17 +70,9 @@ export class UserService {
     );
   }
 
-  // /* GET heroes whose name contains search term */
-  // searchHeroes(term: string): Observable<Hero[]> {
-  //   if (!term.trim()) {
-  //     // if not search term, return empty hero array.
-  //     return of([]);
-  //   }
-  //   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-  //     tap(_ => this.log(`found heroes matching "${term}"`)),
-  //     catchError(this.handleError<Hero[]>('searchHeroes', []))
-  //   );
-  // }
+  private clearCache() {
+    this.cache.clear("api/user");
+  }
 
   /**
    * Handle Http operation that failed.

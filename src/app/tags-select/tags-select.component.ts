@@ -3,6 +3,8 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { Tag } from '../tag';
 import { TagService } from '../tag.service';
 
+
+
 @Component({
   selector: 'app-tags-select',
   templateUrl: './tags-select.component.html',
@@ -27,7 +29,8 @@ export class TagsSelectComponent implements OnInit {
 
   getTags(): void {
     this.tagService.getTags()
-      .subscribe(tags => {
+      .subscribe(data => {
+        var tags = data.slice(0);
         tags.push(Tag.noTag());
         this.tags = tags;
         if (this._selectedTags == null) {
@@ -43,8 +46,13 @@ export class TagsSelectComponent implements OnInit {
 
   onChange(event, tag: Tag) {
     if (event.checked == false) {
-      const index = this._selectedTags.indexOf(tag);
-      this._selectedTags.splice(index, 1);
+      const toRemove = this._selectedTags.filter(t => t.id == tag.id);
+      toRemove.forEach(tag => {
+        const index = this._selectedTags.indexOf(tag);
+        if (index != -1) {
+          this._selectedTags.splice(index, 1);
+        }
+      });
     }
     else {
       this._selectedTags.push(tag);

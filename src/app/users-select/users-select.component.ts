@@ -10,7 +10,7 @@ import { UserService } from '../user.service';
 })
 export class UsersSelectComponent implements OnInit {
 
-  users: User[];
+  users: User[] = [];
   _selectedUsers: User[] = [];
 
   @Input()
@@ -27,7 +27,8 @@ export class UsersSelectComponent implements OnInit {
 
   getUsers(): void {
     this.userService.getUsers()
-      .subscribe(users => {
+      .subscribe(data => {
+        var users = data.slice(0);
         users.push(User.noOwners());
         this.users = users;
         if (this._selectedUsers == null) {
@@ -43,8 +44,13 @@ export class UsersSelectComponent implements OnInit {
 
   onChange(event, user: User) {
     if (event.checked == false) {
-      const index = this._selectedUsers.indexOf(user);
-      this._selectedUsers.splice(index, 1);
+      const toRemove = this._selectedUsers.filter(u => u.id == user.id);
+      toRemove.forEach(user => {
+        const index = this._selectedUsers.indexOf(user);
+        if (index != -1) {
+          this._selectedUsers.splice(index, 1);
+        }
+      });
     }
     else {
       this._selectedUsers.push(user);

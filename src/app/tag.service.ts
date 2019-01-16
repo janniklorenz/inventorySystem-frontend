@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Tag } from './tag';
 import { MessageService } from './message.service';
 import { Config } from './config';
+import { RequestCacheService } from './request-cache.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class TagService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cache: RequestCacheService,
   ) { }
 
   getTags (): Observable<Tag[]> {
@@ -40,6 +42,7 @@ export class TagService {
 
   /** PUT: update the hero on the server */
   updateTag (tag: Tag): Observable<any> {
+    this.clearCache();
     return this.http.put(this.url, tag, this.httpOptions).pipe(
       tap(_ => this.log(`updated tag id=${tag.id}`)),
       catchError(this.handleError<any>('updateTag'))
@@ -48,6 +51,7 @@ export class TagService {
 
   /** POST: add a new hero to the server */
   addTag (tag: Tag): Observable<Tag> {
+    this.clearCache();
     return this.http.post<Tag>(this.url, tag, this.httpOptions).pipe(
       tap((tag: Tag) => this.log(`added tag w/ id=${tag.id}`)),
       catchError(this.handleError<Tag>('addTag'))
@@ -56,6 +60,7 @@ export class TagService {
 
   /** DELETE: delete the hero from the server */
   deleteTag (tag: Tag | number): Observable<Tag> {
+    this.clearCache();
     const id = typeof tag === 'number' ? tag : tag.id;
     const url = `${this.url}/${id}`;
 
@@ -65,17 +70,9 @@ export class TagService {
     );
   }
 
-  // /* GET heroes whose name contains search term */
-  // searchHeroes(term: string): Observable<Hero[]> {
-  //   if (!term.trim()) {
-  //     // if not search term, return empty hero array.
-  //     return of([]);
-  //   }
-  //   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-  //     tap(_ => this.log(`found heroes matching "${term}"`)),
-  //     catchError(this.handleError<Hero[]>('searchHeroes', []))
-  //   );
-  // }
+  private clearCache() {
+    this.cache.clear("api/tag");
+  }
 
   /**
    * Handle Http operation that failed.

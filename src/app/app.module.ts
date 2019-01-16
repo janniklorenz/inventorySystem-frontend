@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS }    from '@angular/common/http';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -58,6 +58,9 @@ import { AutoselectStatusComponent } from './autoselect/status/autoselect-status
 import { TagsSelectComponent } from './tags-select/tags-select.component';
 import { UsersSelectComponent } from './users-select/users-select.component';
 
+import { RequestCacheService } from './request-cache.service';
+import { CachingInterceptorService } from './caching-interceptor.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,7 +96,7 @@ import { UsersSelectComponent } from './users-select/users-select.component';
 
     HttpClientModule,
     BrowserAnimationsModule, /*NoopAnimationsModule*/
-    
+
     MatButtonModule, MatCheckboxModule,
     MatTableModule, MatPaginatorModule, MatSortModule,
     MatMenuModule, MatToolbarModule,
@@ -107,7 +110,10 @@ import { UsersSelectComponent } from './users-select/users-select.component';
     QRCodeModule,
     NgxMdModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    RequestCacheService,
+    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

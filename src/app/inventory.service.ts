@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Inventory } from './inventory';
 import { MessageService } from './message.service';
 import { Config } from './config';
+import { RequestCacheService } from './request-cache.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class InventoryService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cache: RequestCacheService,
   ) { }
 
   getInventory(): Observable<Inventory[]> {
@@ -40,6 +42,7 @@ export class InventoryService {
 
   /** PUT: update the hero on the server */
   updateItem(item: Inventory): Observable<any> {
+    this.clearCache();
     return this.http.put(this.url, item, this.httpOptions).pipe(
       tap(_ => this.log(`updated item id=${item.id}`)),
       catchError(this.handleError<any>('updateItem'))
@@ -48,6 +51,7 @@ export class InventoryService {
 
   /** POST: add a new hero to the server */
   addItem(item: Inventory): Observable<Inventory> {
+    this.clearCache();
     return this.http.post<Inventory>(this.url, item, this.httpOptions).pipe(
       tap((item: Inventory) => this.log(`added item w/ id=${item.id}`)),
       catchError(this.handleError<Inventory>('addItem'))
@@ -56,6 +60,7 @@ export class InventoryService {
 
   /** DELETE: delete the hero from the server */
   deleteItem(item: Inventory | number): Observable<Inventory> {
+    this.clearCache();
     const id = typeof item === 'number' ? item : item.id;
     const url = `${this.url}/${id}`;
 
@@ -65,17 +70,10 @@ export class InventoryService {
     );
   }
 
-  // /* GET heroes whose name contains search term */
-  // searchHeroes(term: string): Observable<Hero[]> {
-  //   if (!term.trim()) {
-  //     // if not search term, return empty hero array.
-  //     return of([]);
-  //   }
-  //   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-  //     tap(_ => this.log(`found heroes matching "${term}"`)),
-  //     catchError(this.handleError<Hero[]>('searchHeroes', []))
-  //   );
-  // }
+
+  private clearCache() {
+    this.cache.clear("api/inventory");
+  }
 
   /**
    * Handle Http operation that failed.

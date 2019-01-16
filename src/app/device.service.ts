@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Device } from './device';
 import { MessageService } from './message.service';
 import { Config } from './config';
+import { RequestCacheService } from './request-cache.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class DeviceService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cache: RequestCacheService,
   ) { }
 
   getDevices (): Observable<Device[]> {
@@ -40,6 +42,7 @@ export class DeviceService {
 
   /** PUT: update the hero on the server */
   updateDevice(device: Device): Observable<any> {
+    this.clearCache();
     return this.http.put(this.url, device, this.httpOptions).pipe(
       tap(_ => this.log(`updated device id=${device.id}`)),
       catchError(this.handleError<any>('updateDevice'))
@@ -48,6 +51,7 @@ export class DeviceService {
 
   /** POST: add a new hero to the server */
   addDevice(device: Device): Observable<Device> {
+    this.clearCache();
     return this.http.post<Device>(this.url, device, this.httpOptions).pipe(
       tap((device: Device) => this.log(`added device w/ id=${device.id}`)),
       catchError(this.handleError<Device>('addDevice'))
@@ -56,6 +60,7 @@ export class DeviceService {
 
   /** DELETE: delete the hero from the server */
   deleteDevice (device: Device | number): Observable<Device> {
+    this.clearCache();
     // if(confirm("Gerät '"+device.name+"' sowie alle Instanzen davon löschen?")) {
       const id = typeof device === 'number' ? device : device.id;
       const url = `${this.url}/${id}`;
@@ -68,17 +73,11 @@ export class DeviceService {
     // TODO if we use confirm here, return observable
   }
 
-  // /* GET heroes whose name contains search term */
-  // searchHeroes(term: string): Observable<Hero[]> {
-  //   if (!term.trim()) {
-  //     // if not search term, return empty hero array.
-  //     return of([]);
-  //   }
-  //   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-  //     tap(_ => this.log(`found heroes matching "${term}"`)),
-  //     catchError(this.handleError<Hero[]>('searchHeroes', []))
-  //   );
-  // }
+
+
+  private clearCache() {
+    this.cache.clear("api/device");
+  }
 
 
   /**

@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Job } from './job';
 import { MessageService } from './message.service';
 import { Config } from './config';
+import { RequestCacheService } from './request-cache.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class JobService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cache: RequestCacheService,
   ) { }
 
   getJobs(): Observable<Job[]> {
@@ -40,6 +42,7 @@ export class JobService {
 
   /** PUT: update the hero on the server */
   updateJob (job: Job): Observable<any> {
+    this.clearCache();
     return this.http.put(this.url, job, this.httpOptions).pipe(
       tap(_ => this.log(`updated job id=${job.id}`)),
       catchError(this.handleError<any>('updateJob'))
@@ -48,6 +51,7 @@ export class JobService {
 
   /** POST: add a new hero to the server */
   addJob (job: Job): Observable<Job> {
+    this.clearCache();
     return this.http.post<Job>(this.url, job, this.httpOptions).pipe(
       tap((job: Job) => this.log(`added job w/ id=${job.id}`)),
       catchError(this.handleError<Job>('addJob'))
@@ -56,6 +60,7 @@ export class JobService {
 
   /** DELETE: delete the hero from the server */
   deleteJob (job: Job | number): Observable<Job> {
+    this.clearCache();
     const id = typeof job === 'number' ? job : job.id;
     const url = `${this.url}/${id}`;
 
@@ -65,17 +70,9 @@ export class JobService {
     );
   }
 
-  // /* GET heroes whose name contains search term */
-  // searchHeroes(term: string): Observable<Hero[]> {
-  //   if (!term.trim()) {
-  //     // if not search term, return empty hero array.
-  //     return of([]);
-  //   }
-  //   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-  //     tap(_ => this.log(`found heroes matching "${term}"`)),
-  //     catchError(this.handleError<Hero[]>('searchHeroes', []))
-  //   );
-  // }
+  private clearCache() {
+    this.cache.clear("api/job");
+  }
 
   /**
    * Handle Http operation that failed.

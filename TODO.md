@@ -7,7 +7,6 @@
   - sort termine by start date
 
 - Location
-  - add GPS position
   - add open street map
   - list jobs and items at this location
 
@@ -17,7 +16,6 @@
   - add single event page
 
 - Devices
-  - suggestions for vendor
   - allow file uploads for devices
     - to store dmx files
     - manuals
@@ -26,8 +24,6 @@
   - show Jobs this item is used in
 
 - General
-  - improve search tags/ fuzy
-    - done for devices/ inventorys with fusejs
   - alerts befor delete
   - dashboard
     - show last activity?
@@ -43,3 +39,4 @@
 
 - Backlog
   - add key-value text fields?
+  - suggestions for vendor

@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Location } from './location';
 import { MessageService } from './message.service';
 import { Config } from './config';
+import { RequestCacheService } from './request-cache.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class LocationService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cache: RequestCacheService,
   ) { }
 
   getLocations(): Observable<Location[]> {
@@ -40,6 +42,7 @@ export class LocationService {
 
   /** PUT: update the hero on the server */
   updateLocation (location: Location): Observable<any> {
+    this.clearCache();
     return this.http.put(this.url, location, this.httpOptions).pipe(
       tap(_ => this.log(`updated location id=${location.id}`)),
       catchError(this.handleError<any>('updateLocation'))
@@ -48,6 +51,7 @@ export class LocationService {
 
   /** POST: add a new hero to the server */
   addLocation (location: Location): Observable<Location> {
+    this.clearCache();
     return this.http.post<Location>(this.url, location, this.httpOptions).pipe(
       tap((location: Location) => this.log(`added location w/ id=${location.id}`)),
       catchError(this.handleError<Location>('addLocation'))
@@ -56,6 +60,7 @@ export class LocationService {
 
   /** DELETE: delete the hero from the server */
   deleteLocation (location: Location | number): Observable<Location> {
+    this.clearCache();
     const id = typeof location === 'number' ? location : location.id;
     const url = `${this.url}/${id}`;
 
@@ -65,17 +70,9 @@ export class LocationService {
     );
   }
 
-  // /* GET heroes whose name contains search term */
-  // searchHeroes(term: string): Observable<Hero[]> {
-  //   if (!term.trim()) {
-  //     // if not search term, return empty hero array.
-  //     return of([]);
-  //   }
-  //   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-  //     tap(_ => this.log(`found heroes matching "${term}"`)),
-  //     catchError(this.handleError<Hero[]>('searchHeroes', []))
-  //   );
-  // }
+  private clearCache() {
+    this.cache.clear("api/location");
+  }
 
   /**
    * Handle Http operation that failed.
