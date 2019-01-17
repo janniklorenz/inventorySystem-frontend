@@ -4,76 +4,79 @@
 </h2>
 
 
-<!-- Filter -->
-<div class="filter" *ngIf="inventory" fxLayoutAlign="space-between" fxLayoutGap="30px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
-  <mat-form-field fxFlex="30%">
-    <input matInput [(ngModel)]="inventory.filter" placeholder="Suche">
-  </mat-form-field>
-  <mat-accordion fxFlex="70%">
-    <app-tags-select [(selectedTags)]="inventory.filteredTags"></app-tags-select>
-    <app-users-select [(selectedUsers)]="inventory.filteredUsers"></app-users-select>
-  </mat-accordion>
+
+<mat-spinner class="spinner-center" *ngIf="!inventory"></mat-spinner>
+<div *ngIf="inventory">
+  <div class="filter" fxLayoutAlign="space-between" fxLayoutGap="30px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+    <mat-form-field fxFlex="30%">
+      <input matInput [(ngModel)]="inventory.filter" placeholder="Suche">
+    </mat-form-field>
+    <mat-accordion fxFlex="70%">
+      <app-tags-select [(selectedTags)]="inventory.filteredTags"></app-tags-select>
+      <app-users-select [(selectedUsers)]="inventory.filteredUsers"></app-users-select>
+    </mat-accordion>
+  </div>
+
+
+  <div class="responsive_table">
+    <table mat-table [dataSource]="inventory" matSort class="mat-elevation-z8 table">
+
+      <ng-container matColumnDef="shortDescription">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Kurze Beschreibung</th>
+        <td mat-cell *matCellDef="let item">
+          <span *ngIf="item.device">{{item.device.title}} </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let item">
+          <span *ngIf="item.device">{{item.device.name}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="vendor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Hersteller</th>
+        <td mat-cell *matCellDef="let item">
+          <span *ngIf="item.device">{{item.device.vendor}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Anzahl</th>
+        <td mat-cell *matCellDef="let item">{{item.instances_count}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="owners">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Besitzer</th>
+        <td mat-cell *matCellDef="let item">
+          <span *ngFor="let owner of item.owners; let isLast=last">{{owner.firstName}} {{owner.lastName}}{{isLast ? '' : ', '}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tags">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tags</th>
+        <td mat-cell *matCellDef="let item">
+          <span *ngFor="let tag of item.device.tags; let isLast=last"><app-tag-span [tag]="tag"></app-tag-span>{{isLast ? '' : ', '}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Aktionen</th>
+        <td mat-cell *matCellDef="let item">
+          <button mat-button color="warn" (click)="delete(item)">Löschen</button>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
+          class="example-first-header-row">
+      </tr>
+
+      <tr mat-row (click)="navigate(row)" *matRowDef="let row; columns: displayedColumns;">
+
+      </tr>
+    </table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[100, 50, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
-
-
-<div class="responsive_table">
-  <table mat-table [dataSource]="inventory" matSort class="mat-elevation-z8 table">
-
-    <ng-container matColumnDef="shortDescription">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Kurze Beschreibung</th>
-      <td mat-cell *matCellDef="let item">
-        <span *ngIf="item.device">{{item.device.title}} </span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let item">
-        <span *ngIf="item.device">{{item.device.name}}</span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="vendor">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Hersteller</th>
-      <td mat-cell *matCellDef="let item">
-        <span *ngIf="item.device">{{item.device.vendor}}</span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="count">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Anzahl</th>
-      <td mat-cell *matCellDef="let item">{{item.instances_count}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="owners">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Besitzer</th>
-      <td mat-cell *matCellDef="let item">
-        <span *ngFor="let owner of item.owners; let isLast=last">{{owner.firstName}} {{owner.lastName}}{{isLast ? '' : ', '}}</span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="tags">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tags</th>
-      <td mat-cell *matCellDef="let item">
-        <span *ngFor="let tag of item.device.tags; let isLast=last"><app-tag-span [tag]="tag"></app-tag-span>{{isLast ? '' : ', '}}</span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Aktionen</th>
-      <td mat-cell *matCellDef="let item">
-        <button mat-button color="warn" (click)="delete(item)">Löschen</button>
-      </td>
-    </ng-container>
-
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
-        class="example-first-header-row">
-    </tr>
-
-    <tr mat-row (click)="navigate(row)" *matRowDef="let row; columns: displayedColumns;">
-
-    </tr>
-  </table>
-</div>
-<mat-paginator [pageSizeOptions]="[100, 50, 10, 20]" showFirstLastButtons></mat-paginator>

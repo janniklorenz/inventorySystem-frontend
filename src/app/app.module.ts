@@ -24,6 +24,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatChipsModule} from "@angular/material/chips";
+import { MatProgressSpinnerModule } from "@angular/material";
 
 import { MccColorPickerModule } from 'material-community-components';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -105,6 +106,7 @@ import { CachingInterceptorService } from './caching-interceptor.service';
     MatDatepickerModule, MatNativeDateModule,
     MatExpansionModule, MatListModule, MatCardModule,
     FlexLayoutModule, MatIconModule, MatTabsModule, MatChipsModule,
+    MatProgressSpinnerModule,
 
     MccColorPickerModule,
     QRCodeModule,

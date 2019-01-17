@@ -1,3 +1,4 @@
+<mat-spinner class="spinner-center" *ngIf="!device"></mat-spinner>
 <div *ngIf="device" class="row">
   <h2>Gerät {{device.name | uppercase}}</h2>
 

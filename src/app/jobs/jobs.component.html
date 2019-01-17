@@ -2,43 +2,45 @@
 
 
 
-<!-- Filter -->
-<button mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
-<mat-form-field style="float:right;">
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche">
-</mat-form-field>
+<mat-spinner class="spinner-center" *ngIf="!jobs"></mat-spinner>
+<div *ngIf="jobs">
+  <button mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
+  <mat-form-field style="float:right;">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche">
+  </mat-form-field>
 
 
 
 
-<div class="responsive_table">
-  <table mat-table [dataSource]="jobs" matSort class="table mat-elevation-z8">
+  <div class="responsive_table">
+    <table mat-table [dataSource]="jobs" matSort class="table mat-elevation-z8">
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let job">{{job.name}}</td>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let job">{{job.name}}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="location">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ort</th>
-      <td mat-cell *matCellDef="let job">
-        <span *ngIf="job.location">{{job.location.name}}</span>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ort</th>
+        <td mat-cell *matCellDef="let job">
+          <span *ngIf="job.location">{{job.location.name}}</span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Aktionen</th>
-      <td mat-cell *matCellDef="let job">
-        <button mat-button color="warn" (click)="delete(job)">Löschen</button>
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Aktionen</th>
+        <td mat-cell *matCellDef="let job">
+          <button mat-button color="warn" (click)="delete(job)">Löschen</button>
+        </td>
+      </ng-container>
 
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
-        class="example-first-header-row">
-    </tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
+          class="example-first-header-row">
+      </tr>
 
-    <tr mat-row (click)="navigate(job)" *matRowDef="let job; columns: displayedColumns;"></tr>
-  </table>
+      <tr mat-row (click)="navigate(job)" *matRowDef="let job; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[100, 50, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
-<mat-paginator [pageSizeOptions]="[100, 50, 10, 20]" showFirstLastButtons></mat-paginator>
