@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "lambda": {
+    "inventorySystem": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/lambda",
+            "outputPath": "dist/inventorySystem",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -61,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "lambda:build"
+            "browserTarget": "inventorySystem:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "lambda:build:production"
+              "browserTarget": "inventorySystem:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "lambda:build"
+            "browserTarget": "inventorySystem:build"
           }
         },
         "test": {
@@ -83,7 +83,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.sass"
+              "src/styles.scss"
             ],
             "scripts": [],
             "assets": [
@@ -106,7 +106,7 @@
         }
       }
     },
-    "lambda-e2e": {
+    "inventorySystem-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -115,11 +115,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "lambda:serve"
+            "devServerTarget": "inventorySystem:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "lambda:serve:production"
+              "devServerTarget": "inventorySystem:serve:production"
             }
           }
         },
@@ -135,5 +135,5 @@
       }
     }
   },
-  "defaultProject": "lambda"
+  "defaultProject": "inventorySystem"
 }
