@@ -5,7 +5,7 @@ const maxAge = 30000;
 @Injectable()
 export class RequestCacheService {
 
-  cache = new Map();
+  private cache = new Map();
 
   clear(pattern: string) {
     console.log("Clear cache with pattern", pattern);
@@ -39,7 +39,7 @@ export class RequestCacheService {
       return;
     }
 
-    const url = req.url;
+    const url = req.urlWithParams;
     const entry = { url, response, lastRead: Date.now() };
     this.cache.set(url, entry);
 
