@@ -1,7 +1,7 @@
 <h2>Personen</h2>
 
 <mat-spinner class="spinner-center" *ngIf="!users"></mat-spinner>
-<div *ngIf="users">
+<div [hidden]="!users">
   <button mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
   <mat-form-field style="float:right;">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche">

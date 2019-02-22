@@ -6,8 +6,8 @@
 
 
 <mat-spinner class="spinner-center" *ngIf="!inventory"></mat-spinner>
-<div *ngIf="inventory">
-  <div class="filter" fxLayoutAlign="space-between" fxLayoutGap="30px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+<div [hidden]="!inventory">
+  <div *ngIf="inventory" class="filter" fxLayoutAlign="space-between" fxLayoutGap="30px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
     <mat-form-field fxFlex="30%">
       <input matInput [(ngModel)]="inventory.filter" placeholder="Suche">
     </mat-form-field>

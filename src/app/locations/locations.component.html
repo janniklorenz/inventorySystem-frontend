@@ -1,7 +1,7 @@
 <h2>Orte</h2>
 
 <mat-spinner class="spinner-center" *ngIf="!locations"></mat-spinner>
-<div *ngIf="locations">
+<div [hidden]="!locations">
   <button mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
   <mat-form-field style="float:right;">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche">

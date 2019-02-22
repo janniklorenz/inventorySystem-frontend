@@ -5,8 +5,8 @@
 
 
 <mat-spinner class="spinner-center" *ngIf="!devices"></mat-spinner>
-<div *ngIf="devices">
-  <div class="filter" fxLayoutAlign="space-between" fxLayoutGap="30px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+<div [hidden]="!devices">
+  <div *ngIf="devices" class="filter" fxLayoutAlign="space-between" fxLayoutGap="30px" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
     <mat-form-field fxFlex="30%">
       <input matInput [(ngModel)]="devices.filter" placeholder="Suche">
     </mat-form-field>

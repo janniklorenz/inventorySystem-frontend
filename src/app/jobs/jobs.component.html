@@ -3,7 +3,7 @@
 
 
 <mat-spinner class="spinner-center" *ngIf="!jobs"></mat-spinner>
-<div *ngIf="jobs">
+<div [hidden]="!jobs">
   <button mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
   <mat-form-field style="float:right;">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche">
