@@ -1,0 +1,65 @@
+<mat-spinner class="spinner-center" *ngIf="!group"></mat-spinner>
+<div *ngIf="group" class="row">
+  <h2>Group {{group.name}}</h2>
+
+  <div fxLayoutGap="10px" fxLayout="row" fxLayout.xs="column">
+
+    <div fxFlex fxLayout="column">
+      <h3>Eigenschaften</h3>
+      <mat-form-field fxFlex appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="group.name" placeholder="Name"/>
+      </mat-form-field>
+    </div>
+
+
+    <div fxFlex>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let item of group.items; let i = index" [attr.data-index]="i">
+          <mat-expansion-panel-header class="right-aligned-header">
+            <mat-panel-title>
+              {{item.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{item.device.title}} {{item.device.name}} {{item.device.vendor}} {{item.instances_count}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div fxFlex>
+            <span *ngFor="let owner of item.owners; let isLast=last">
+              {{owner.firstName}} {{owner.lastName}}{{isLast ? '' : ', '}}
+            </span>
+          </div>
+          <div fxFlex>
+            <span *ngFor="let tag of item.device.tags; let isLast=last">
+              <app-tag-span [tag]="tag"></app-tag-span>{{isLast ? '' : ', '}}
+            </span>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+
+
+
+
+
+
+    <footer>
+      <mat-toolbar style="display:fixed;bottom:0px;" fxLayout="row" fxLayoutAlign="space-between center" >
+        <div class="buttonGroup">
+          <button mat-raised-button (click)="goBack()">Zurück</button>
+          <button mat-raised-button *ngIf="mode == DetailMode.Edit" (click)="delete()" color="warn">Löschen</button>
+        </div>
+        <div class="buttonGroup">
+          <button mat-raised-button color="primary" (click)="saveAndExit()">Speichern</button>
+          <button mat-raised-button [matMenuTriggerFor]="saveAnd">mehr</button>
+          <mat-menu #saveAnd="matMenu">
+            <button mat-menu-item (click)="saveAndNew()">Speichern und Neu</button>
+          </mat-menu>
+        </div>
+      </mat-toolbar>
+    </footer>
+  </div>
+</div>

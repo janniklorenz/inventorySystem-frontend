@@ -7,6 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MatTableModule} from '@angular/material/table';
+import {MatTreeModule} from '@angular/material/tree';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 
@@ -35,6 +36,8 @@ import { AppComponent } from './app.component';
 
 import { TagsComponent } from './tags/tags.component';
 import { TagDetailComponent } from './tag-detail/tag-detail.component';
+import { GroupsComponent } from './groups/groups.component';
+import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { DevicesComponent } from './devices/devices.component';
 import { DeviceDetailComponent } from './device-detail/device-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -55,6 +58,7 @@ import { AutoselectUserComponent } from './autoselect/user/autoselect-user.compo
 import { AutoselectTagComponent } from './autoselect/tag/autoselect-tag.component';
 import { AutoselectLocationComponent } from './autoselect/location/autoselect-location.component';
 import { AutoselectDeviceComponent } from './autoselect/device/autoselect-device.component';
+import { AutoselectGroupComponent } from './autoselect/group/autoselect-group.component';
 import { AutoselectStatusComponent } from './autoselect/status/autoselect-status.component';
 import { TagsSelectComponent } from './tags-select/tags-select.component';
 import { UsersSelectComponent } from './users-select/users-select.component';
@@ -67,6 +71,8 @@ import { CachingInterceptorService } from './caching-interceptor.service';
     AppComponent,
     TagsComponent,
     TagDetailComponent,
+    GroupsComponent,
+    GroupDetailComponent,
     DevicesComponent,
     DeviceDetailComponent,
     DashboardComponent,
@@ -84,6 +90,7 @@ import { CachingInterceptorService } from './caching-interceptor.service';
     JobDetailComponent,
     AutoselectLocationComponent,
     AutoselectDeviceComponent,
+    AutoselectGroupComponent,
     AutoselectStatusComponent,
     TagsSelectComponent,
     UsersSelectComponent
@@ -100,6 +107,7 @@ import { CachingInterceptorService } from './caching-interceptor.service';
 
     MatButtonModule, MatCheckboxModule,
     MatTableModule, MatPaginatorModule, MatSortModule,
+    MatTreeModule,
     MatMenuModule, MatToolbarModule,
     MatFormFieldModule, MatInputModule,
     MatAutocompleteModule,

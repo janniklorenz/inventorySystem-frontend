@@ -14,6 +14,7 @@
       <div fxFlex="30" fxLayout="column">
         <h3>Eigenschaften</h3>
         <app-autoselect-device [(device)]="item.device"></app-autoselect-device>
+        <app-autoselect-group [(group)]="item.group"></app-autoselect-group>
         <!-- <mat-form-field appearance="fill">
           <mat-label>Preis</mat-label>
           <input matInput [(ngModel)]="item.price" placeholder="Preis"/>

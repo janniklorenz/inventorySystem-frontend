@@ -2,11 +2,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 
+import {FlatTreeControl} from '@angular/cdk/tree';
+import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+
+
 import { Inventory } from '../inventory';
 import { InventoryService } from '../inventory.service';
 import { Tag } from '../tag';
 import { User } from '../user';
 import { FuseSearchDataSource } from '../fuseSearchDataSource';
+
 
 
 
@@ -75,10 +80,9 @@ class InventoryDataSource extends FuseSearchDataSource<Inventory> {
   styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent implements OnInit {
-
   inventory: InventoryDataSource;
 
-  displayedColumns: string[] = ['shortDescription', 'name', 'vendor', "count", "owners", "tags", "actions"];
+  displayedColumns: string[] = ['shortDescription', 'name', 'vendor', "group", "count", "owners", "tags", "actions"];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

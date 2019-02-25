@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent }      from './dashboard/dashboard.component';
 import { TagsComponent }      from './tags/tags.component';
 import { TagDetailComponent }      from './tag-detail/tag-detail.component';
+import { GroupsComponent } from './groups/groups.component';
+import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { DevicesComponent }      from './devices/devices.component';
 import { DeviceDetailComponent }      from './device-detail/device-detail.component';
 import { UsersComponent }      from './users/users.component';
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'device/:id', component: DeviceDetailComponent },
   { path: 'tag', component: TagsComponent },
   { path: 'tag/:id', component: TagDetailComponent },
+  { path: 'group', component: GroupsComponent },
+  { path: 'group/:id', component: GroupDetailComponent },
   { path: 'user', component: UsersComponent },
   { path: 'user/:id', component: UserDetailComponent },
   { path: 'location', component: LocationsComponent },

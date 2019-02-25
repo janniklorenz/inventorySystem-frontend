@@ -1,0 +1,110 @@
+<h2>Tags</h2>
+
+
+<mat-spinner class="spinner-center" *ngIf="!groups"></mat-spinner>
+<div [hidden]="!groups">
+  <button mat-flat-button color="primary" (click)="navigateNew()">Neu</button>
+  <mat-form-field style="float:right;">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Suche">
+  </mat-form-field>
+
+
+
+
+
+
+
+
+
+  <!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="navigate(node.inventory)">
+      <button mat-icon-button></button>
+
+
+      <div fxFlex>{{node.inventory.name}}</div>
+      <div fxFlex><span *ngIf="node.inventory.device">{{node.inventory.device.title}}</span></div>
+      <div fxFlex><span *ngIf="node.inventory.device">{{node.inventory.device.name}}</span></div>
+      <div fxFlex><span *ngIf="node.inventory.device">{{node.inventory.device.vendor}}</span></div>
+      <div fxFlex><span *ngIf="node.inventory.device">{{node.inventory.instances_count}}</span></div>
+      <div fxFlex>
+        <span *ngFor="let owner of node.inventory.owners; let isLast=last">
+          {{owner.firstName}} {{owner.lastName}}{{isLast ? '' : ', '}}
+        </span>
+      </div>
+      <div fxFlex>
+        <span *ngIf="node.inventory.device">
+          <span *ngFor="let tag of node.inventory.device.tags; let isLast=last">
+            <app-tag-span [tag]="tag"></app-tag-span>{{isLast ? '' : ', '}}
+          </span>
+        </span>
+      </div>
+      <div fxFlex>
+        <button mat-button color="warn" (click)="delete(node.inventory)">Löschen</button>
+      </div>
+
+    </mat-tree-node>
+
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding (click)="navigate(node.inventory)">
+      <button mat-icon-button matTreeNodeToggle
+              [attr.aria-label]="'toggle ' + node.name">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+
+      <div fxFlex>{{node.inventory.name}}</div>
+      <div fxFlex><span *ngIf="node.inventory.device">{{node.inventory.device.title}}</span></div>
+      <div fxFlex><span *ngIf="node.inventory.device">{{node.inventory.device.name}}</span></div>
+      <div fxFlex><span *ngIf="node.inventory.device">{{node.inventory.device.vendor}}</span></div>
+      <div fxFlex><span *ngIf="node.inventory.device">{{node.inventory.instances_count}}</span></div>
+      <div fxFlex>
+        <span *ngFor="let owner of node.inventory.owners; let isLast=last">
+          {{owner.firstName}} {{owner.lastName}}{{isLast ? '' : ', '}}
+        </span>
+      </div>
+      <div fxFlex>
+        <span *ngIf="node.inventory.device">
+          <span *ngFor="let tag of node.inventory.device.tags; let isLast=last">
+            <app-tag-span [tag]="tag"></app-tag-span>{{isLast ? '' : ', '}}
+          </span>
+        </span>
+      </div>
+      <div fxFlex>
+        <button mat-button color="warn" (click)="delete(node.inventory)">Löschen</button>
+      </div>
+
+    </mat-tree-node>
+  </mat-tree> -->
+
+
+
+
+
+
+  <div class="responsive_table">
+    <table mat-table [dataSource]="groups" matSort class="table mat-elevation-z8">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let group">
+          {{group.name}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Aktionen</th>
+        <td mat-cell *matCellDef="let group">
+          <button mat-button color="warn" (click)="delete(group)">Löschen</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
+          class="example-first-header-row">
+      </tr>
+
+      <tr mat-row (click)="navigate(group)" *matRowDef="let group; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[100, 50, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

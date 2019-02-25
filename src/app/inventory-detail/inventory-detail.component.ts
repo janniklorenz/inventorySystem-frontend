@@ -110,7 +110,7 @@ export class InventoryDetailComponent implements OnInit {
         .subscribe(() => callback());
       break;
     case DetailMode.New:
-      const deviceID = this.item.device.id;
+      // const deviceID = this.item.device.id;
       this.inventoryService.addItem(this.item).subscribe(() => callback());
       break;
     }

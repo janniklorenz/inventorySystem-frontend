@@ -1,0 +1,10 @@
+
+<mat-form-field style="width:100%;" appearance="fill">
+  <mat-label>Gruppe</mat-label>
+  <input placeholder="Gruppe" aria-label="Number" matInput [formControl]="autoselectControl" [matAutocomplete]="autoGroup">
+  <mat-autocomplete #autoGroup="matAutocomplete" [displayWith]="displayWithLabel" autoActiveFirstOption="true" (optionSelected)="onChange($event)">
+    <mat-option *ngFor="let group of filteredGroups | async" [value]="group">
+      {{group.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
